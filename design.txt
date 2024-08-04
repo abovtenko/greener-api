@@ -1,0 +1,15 @@
+
+Greener API
+
+	API Architecture
+		Minimal (no controllers)
+		 
+		 The application that this api will serve is the main focus point. So choosing a path that allows the api itself to be built faster and with less code is preferred.
+	
+	ORM
+		Dapper
+	
+	Database
+		Postgres 
+	
+	
