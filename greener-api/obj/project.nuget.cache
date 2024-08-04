@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "Ow2qe3+gMp0KYSHWM0l3bTzMrl4uhw+J5ig1ReYYgecd1YMGj0nsMnecdg49o97r7rKkfPIXyku70vuV8teYrw==",
+  "dgSpecHash": "m/Uv9bFzUG6bFDR0616mAMzmkJBemM9Rb8VivKiA5Ea5DSSNIZnuMu2lX6h8uM4E36v+Vvg3CReqfawFikFfiw==",
   "success": true,
   "projectFilePath": "C:\\self\\dev\\greener-api\\greener-api\\greener-api.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\andrb\\.nuget\\packages\\dapper\\2.1.35\\dapper.2.1.35.nupkg.sha512",
+    "C:\\Users\\andrb\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\andrb\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.0\\microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\andrb\\.nuget\\packages\\npgsql\\8.0.3\\npgsql.8.0.3.nupkg.sha512"
+  ],
   "logs": []
 }

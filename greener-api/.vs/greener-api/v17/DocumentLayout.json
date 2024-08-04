@@ -1,12 +1,139 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\self\\dev\\greener-api\\greener-api\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{6CA1B248-267C-4832-B214-CC3ED42E60D0}|greener-api.csproj|c:\\self\\dev\\greener-api\\greener-api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6CA1B248-267C-4832-B214-CC3ED42E60D0}|greener-api.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6CA1B248-267C-4832-B214-CC3ED42E60D0}|greener-api.csproj|c:\\self\\dev\\greener-api\\greener-api\\models\\transaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6CA1B248-267C-4832-B214-CC3ED42E60D0}|greener-api.csproj|solutionrelative:models\\transaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6CA1B248-267C-4832-B214-CC3ED42E60D0}|greener-api.csproj|c:\\self\\dev\\greener-api\\greener-api\\models\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6CA1B248-267C-4832-B214-CC3ED42E60D0}|greener-api.csproj|solutionrelative:models\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6CA1B248-267C-4832-B214-CC3ED42E60D0}|greener-api.csproj|c:\\self\\dev\\greener-api\\greener-api\\models\\account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6CA1B248-267C-4832-B214-CC3ED42E60D0}|greener-api.csproj|solutionrelative:models\\account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6CA1B248-267C-4832-B214-CC3ED42E60D0}|greener-api.csproj|c:\\self\\dev\\greener-api\\greener-api\\models\\guser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6CA1B248-267C-4832-B214-CC3ED42E60D0}|greener-api.csproj|solutionrelative:models\\guser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6CA1B248-267C-4832-B214-CC3ED42E60D0}|greener-api.csproj|c:\\self\\dev\\greener-api\\greener-api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{6CA1B248-267C-4832-B214-CC3ED42E60D0}|greener-api.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6CA1B248-267C-4832-B214-CC3ED42E60D0}|greener-api.csproj|c:\\self\\dev\\greener-api\\greener-api\\greener-api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{6CA1B248-267C-4832-B214-CC3ED42E60D0}|greener-api.csproj|solutionrelative:greener-api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 6,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Transaction.cs",
+              "DocumentMoniker": "C:\\self\\dev\\greener-api\\greener-api\\models\\Transaction.cs",
+              "RelativeDocumentMoniker": "models\\Transaction.cs",
+              "ToolTip": "C:\\self\\dev\\greener-api\\greener-api\\models\\Transaction.cs",
+              "RelativeToolTip": "models\\Transaction.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-04T17:29:09.394Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Category.cs",
+              "DocumentMoniker": "C:\\self\\dev\\greener-api\\greener-api\\models\\Category.cs",
+              "RelativeDocumentMoniker": "models\\Category.cs",
+              "ToolTip": "C:\\self\\dev\\greener-api\\greener-api\\models\\Category.cs",
+              "RelativeToolTip": "models\\Category.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAjAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-04T17:28:35.475Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Account.cs",
+              "DocumentMoniker": "C:\\self\\dev\\greener-api\\greener-api\\models\\Account.cs",
+              "RelativeDocumentMoniker": "models\\Account.cs",
+              "ToolTip": "C:\\self\\dev\\greener-api\\greener-api\\models\\Account.cs",
+              "RelativeToolTip": "models\\Account.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAjAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-04T17:28:46.823Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "greener-api",
+              "DocumentMoniker": "C:\\self\\dev\\greener-api\\greener-api\\greener-api.csproj",
+              "RelativeDocumentMoniker": "greener-api.csproj",
+              "ToolTip": "C:\\self\\dev\\greener-api\\greener-api\\greener-api.csproj",
+              "RelativeToolTip": "greener-api.csproj",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAArAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-08-04T17:00:49.652Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "GUser.cs",
+              "DocumentMoniker": "C:\\self\\dev\\greener-api\\greener-api\\models\\GUser.cs",
+              "RelativeDocumentMoniker": "models\\GUser.cs",
+              "ToolTip": "C:\\self\\dev\\greener-api\\greener-api\\models\\GUser.cs",
+              "RelativeToolTip": "models\\GUser.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAsAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-04T17:01:01.38Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\self\\dev\\greener-api\\greener-api\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\self\\dev\\greener-api\\greener-api\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAABsAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-08-04T16:58:53.754Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\self\\dev\\greener-api\\greener-api\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\self\\dev\\greener-api\\greener-api\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAzAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-04T16:56:39.599Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

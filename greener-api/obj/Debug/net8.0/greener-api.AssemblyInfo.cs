@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("greener-api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bcdf95de76dccd5973d3ce84ffa597907a0fde91")]
 [assembly: System.Reflection.AssemblyProductAttribute("greener-api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("greener-api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
