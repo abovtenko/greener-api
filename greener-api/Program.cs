@@ -31,7 +31,7 @@ app.MapGet("/users", async (NpgsqlConnection db) =>
     return Results.Ok(accountList);
 });
 
-app.MapGet("/users/{id}", async (int id, NpgsqlConnection db) =>
+app.MapGet("/user/{id}", async (int id, NpgsqlConnection db) =>
 {
     GUser user = null;
 
@@ -58,7 +58,7 @@ app.MapPost("/user", async (GUser newUser, NpgsqlConnection db) =>
     {
         var insertedId = await db.QuerySingleAsync<int>(
             "INSERT INTO public.g_user (username) VALUES (@Username) RETURNING id;",
-            new { newUser }
+            new { Username = newUser.Username }
         );
 
         // Optionally, you can return the created entity with its new ID
@@ -72,7 +72,7 @@ app.MapPost("/user", async (GUser newUser, NpgsqlConnection db) =>
 });
 
 
-app.MapPut("/users/{id}", async (int id, GUser updatedUser, NpgsqlConnection db) =>
+app.MapPut("/user/{id}", async (int id, GUser updatedUser, NpgsqlConnection db) =>
 {
     try
     {
@@ -94,7 +94,7 @@ app.MapPut("/users/{id}", async (int id, GUser updatedUser, NpgsqlConnection db)
     return Results.NoContent();
 });
 
-app.MapDelete("/users/{id}", async (int id, NpgsqlConnection db) =>
+app.MapDelete("/user/{id}", async (int id, NpgsqlConnection db) =>
 {
     try
     {

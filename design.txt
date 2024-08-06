@@ -11,5 +11,17 @@ Greener API
 	
 	Database
 		Postgres 
+		
+	REST
+	
+		This application will use resources, which is level 1 of RMM. The resources will be:
+		
+			/user
+			
+			/account
+			
+			/transaction
+			
+			/category
 	
 	
