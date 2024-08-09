@@ -14,14 +14,115 @@ Greener API
 		
 	REST
 	
-		This application will use resources, which is level 1 of RMM. The resources will be:
+		This application will use resources, which is level 1 of RMM. This application will also use http verbs in a way that communicates intent of the request, and html response codes in a way that communicates what effect the request had on system. 
+		
+		Resource Ownership
+		
+			When we come across a situation where a resource is actually a child of another resource, how are we going to expose these resources? 
+			
+			Let's take the example of accounts and transactions as they relate in our application. In the database, each transaction record is owned by an account record. Constraints on the database table say that we cannot insert a transaction record, without a corresponding account record that is already in the database. A similair thing is true for the entities in the application that describe the data in an object oriented way. An account entity will have a collection of transaction entities. Each transaction entity record has an accountid property. A transaction entity always is related to an account entity. 
+			
+			We are discussing how to access a child resource of another resource. Anyway that we choose to do this, it will describe a relationship between them. What are the options?
+			
+				I want to get all transactions under an account.
+			
+				/account/:accountId/transaction/
+				/account/transaction/:accountId
+				/transaction/:accountId
+				
+				- In every scenario, we pass accountId as the parameter. This makes sense because we are looking for records related to this account. 
+				- two uris are hitting account resource and them traversing down to the transaction
+				- one uri is hitting transaction resource directly
+				- in the first two, we are addressing a child of a resourece, the last is a resource itself
+				- use the last one
+			
+			The last option defines the uri in a way that describes the transaction resource as a resource in itself. It gives it full resourcness. I want to expand on this idea further. Revisit! 
+	
+		
+		
+		The resources will be:
 		
 			/user
 			
+				GET /user/:id
+				
+					on getting details from user record, such as display name
+				
+				POST /user/
+				
+					on creating a new user account
+				
+				PUT /user/
+				
+					on updating user details
+				
+				DELETE /user/:id
+				
+					on deleting user account
+					
+			
 			/account
+			
+				GET /account/:userId
+				
+					on getting a list of the users accounts
+						- each returned account object here does not contain any transactions
+						
+				GET /account/:userId?accountId={}
+				
+					on getting details of a single account
+						- should transactions be populated? 
+							- no, use transaction resource
+				
+				POST /account/
+				
+					on creating a new account under a user
+				
+				PUT /account/
+				
+					on updating details of a user account
+				
+				DELETE /account/:accountId
+				
+					on deleting a user account
 			
 			/transaction
 			
+				GET /transaction/:accountId
+				
+					on getting transactions under an account
+						- populate the category list for each transaction
+							- prevent large amount of extra calls to server
+				
+				POST /transaction/
+				
+					on creating a new transaction
+				
+				PUT /transaction/
+				
+					on updating an existing transaction
+				
+				DELETE /transaction/:id
+				
+					on deleting a transaction
+			
 			/category
+			
+				GET /category/:userId
+				
+					on getting a list of saved categories for a user
+						- each user can create their own set of categories
+				
+				POST /category/
+				
+					on createing new categories for a user
+				
+				PUT /category/
+				
+					on updating an existing category for a user
+				
+				DELETE /category/:categoryId
+				
+					on deleting a category for a user
 	
 	
