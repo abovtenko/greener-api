@@ -16,21 +16,6 @@ var app = builder.Build();
 
 #region GUser
 
-app.MapGet("/users", async (NpgsqlConnection db) =>
-{
-    var accountList = new List<GUser>();
-
-    try
-    {
-        accountList = (List<GUser>)await db.QueryAsync<GUser>("select * from public.g_user;");
-    }
-    catch (Exception e)
-    {
-    }
-
-    return Results.Ok(accountList);
-});
-
 app.MapGet("/user/{id}", async (int id, NpgsqlConnection db) =>
 {
     GUser user = null;
@@ -58,7 +43,7 @@ app.MapPost("/user", async (GUser newUser, NpgsqlConnection db) =>
     {
         var insertedId = await db.QuerySingleAsync<int>(
             "INSERT INTO public.g_user (username) VALUES (@Username) RETURNING id;",
-            new { Username = newUser.Username }
+            newUser
         );
 
         // Optionally, you can return the created entity with its new ID
@@ -70,7 +55,6 @@ app.MapPost("/user", async (GUser newUser, NpgsqlConnection db) =>
         return Results.Problem(detail: e.Message);
     }
 });
-
 
 app.MapPut("/user/{id}", async (int id, GUser updatedUser, NpgsqlConnection db) =>
 {
@@ -115,247 +99,266 @@ app.MapDelete("/user/{id}", async (int id, NpgsqlConnection db) =>
 
 #endregion
 
-//#region Account
+#region Account
 
-//app.MapGet("/account", async (NpgsqlConnection db) =>
-//{
-//    var accountList = new List<Account>();
+app.MapGet("/account/{userId}", async (int userId, int? accountId, NpgsqlConnection db) =>
+{
+    var accountList = new List<Account>();
 
-//    try
-//    {
-//        accountList = (List<Account>)await db.QueryAsync<Account>("select * from public.account;");
-//    }
-//    catch (Exception e)
-//    {
-//    }
+    try
+    {
+        var query = "select * from public.account where user_id = @UserId";
+        var payload = new { UserId = userId, AccountId = 0 };
 
-//    return Results.Ok(accountList);
-//});
+        if (accountId.HasValue)
+        {
+            query += " and id = @AccountId";
+            payload = new { UserId = userId, AccountId = accountId.Value };
+        }
 
-//app.MapGet("/account/{id}", async (int id, NpgsqlConnection db) =>
-//{
-//    GUser user = null;
+        query += ";"; 
+        accountList = (List<Account>)await db.QueryAsync<Account>(query, payload);
+    }
+    catch (Exception e)
+    {
+        return Results.Problem(detail: e.Message);
+    }
 
-//    try
-//    {
-//        user = await db.QueryFirstOrDefaultAsync<Account>("SELECT * FROM public.g_user WHERE id = @Id;", new { Id = id });
-//    }
-//    catch (Exception e)
-//    {
-//        return Results.Problem(detail: e.Message);
-//    }
+    return Results.Ok(accountList);
+});
 
-//    if (user == null)
-//    {
-//        return Results.NotFound();
-//    }
+app.MapPost("/account", async (Account updatedAccount, NpgsqlConnection db) =>
+{
+    try
+    {
+        var rowsAffected = await db.ExecuteAsync(
+            "INSERT INTO public.account (user_id, provider, name, type) VALUES (@UserId, @Name, @Provider, @Type) RETURNING id;",
+            updatedAccount
+        );
 
-//    return Results.Ok(user);
-//});
+        if (rowsAffected == 0)
+        {
+            return Results.NotFound();
+        }
+    }
+    catch (Exception e)
+    {
+        return Results.Problem(detail: e.Message);
+    }
 
-//app.MapPut("/account/{id}", async (int id, GUser updatedUser, NpgsqlConnection db) =>
-//{
-//    try
-//    {
-//        var rowsAffected = await db.ExecuteAsync(
-//            "UPDATE public.g_user SET name = @Name, email = @Email WHERE id = @Id;",
-//            new { Name = updatedUser.Name, Email = updatedUser.Email, Id = id }
-//        );
+    return Results.NoContent();
+});
 
-//        if (rowsAffected == 0)
-//        {
-//            return Results.NotFound();
-//        }
-//    }
-//    catch (Exception e)
-//    {
-//        return Results.Problem(detail: e.Message);
-//    }
+app.MapPut("/account/{id}", async (int id, Account pAccount, NpgsqlConnection db) =>
+{
+    try
+    {
+        var rowsAffected = await db.ExecuteAsync(
+            "UPDATE public.account SET name = @Name, Provider = @Provider, @Type = type WHERE id = @Id;",
+            pAccount
+        );
 
-//    return Results.NoContent();
-//});
+        if (rowsAffected == 0)
+        {
+            return Results.NotFound();
+        }
+    }
+    catch (Exception e)
+    {
+        return Results.Problem(detail: e.Message);
+    }
 
-//app.MapDelete("/account/{id}", async (int id, NpgsqlConnection db) =>
-//{
-//    try
-//    {
-//        var rowsAffected = await db.ExecuteAsync("DELETE FROM public.g_user WHERE id = @Id;", new { Id = id });
+    return Results.NoContent();
+});
 
-//        if (rowsAffected == 0)
-//        {
-//            return Results.NotFound();
-//        }
-//    }
-//    catch (Exception e)
-//    {
-//        return Results.Problem(detail: e.Message);
-//    }
+app.MapDelete("/account/{id}", async (int id, NpgsqlConnection db) =>
+{
+    try
+    {
+        var rowsAffected = await db.ExecuteAsync("DELETE FROM public.account WHERE id = @Id;", new { Id = id });
 
-//    return Results.NoContent();
-//});
+        if (rowsAffected == 0)
+        {
+            return Results.NotFound();
+        }
+    }
+    catch (Exception e)
+    {
+        return Results.Problem(detail: e.Message);
+    }
 
-//#endregion
+    return Results.NoContent();
+});
 
-//#region Transaction
+#endregion
 
-//app.MapGet("/account", async (NpgsqlConnection db) =>
-//{
-//    var accountList = new List<Account>();
-//    try
-//    {
-//        accountList = (List<Account>)await db.QueryAsync<Account>("select * from public.account;");
-//    }
-//    catch (Exception e)
-//    {
-//    }
+#region Transaction
 
-//    return Results.Ok(accountList);
-//});
+app.MapGet("/transaction/{accountId}", async (int accountId, NpgsqlConnection db) =>
+{
+    var transactionList = new List<Transaction>();
 
-//app.MapGet("/account/{id}", async (int id, NpgsqlConnection db) =>
-//{
-//    GUser user = null;
+    try
+    {
+        transactionList = (List<Transaction>)await db.QueryAsync<Transaction>("select * from public.transaction where account_id = @AccountId;",
+            new { AccountId = accountId });
+    }
+    catch (Exception e)
+    {
+        Results.Problem(detail: e.Message);
+    }
 
-//    try
-//    {
-//        user = await db.QueryFirstOrDefaultAsync<Account>("SELECT * FROM public.g_user WHERE id = @Id;", new { Id = id });
-//    }
-//    catch (Exception e)
-//    {
-//        return Results.Problem(detail: e.Message);
-//    }
+    return Results.Ok(transactionList);
+});
 
-//    if (user == null)
-//    {
-//        return Results.NotFound();
-//    }
+app.MapPost("/transaction", async (Transaction pTransaction, NpgsqlConnection db) =>
+{
+    try
+    {
+        var insertedRowId = await db.QuerySingleAsync<int>("INSERT INTO public.transaction (account_id, description, credit, debit, date) " +
+            " VALUES (@AccountId, @Description, @Credit, @Debit, @Date) RETURNING id;", pTransaction);
 
-//    return Results.Ok(user);
-//});
+        pTransaction.Id = insertedRowId;
 
-//app.MapPut("/account/{id}", async (int id, GUser updatedUser, NpgsqlConnection db) =>
-//{
-//    try
-//    {
-//        var rowsAffected = await db.ExecuteAsync(
-//            "UPDATE public.g_user SET name = @Name, email = @Email WHERE id = @Id;",
-//            new { Name = updatedUser.Name, Email = updatedUser.Email, Id = id }
-//        );
+        return Results.Created($"/transaction/{insertedRowId}", pTransaction);
+    }
+    catch (Exception e)
+    {
+        return Results.Problem(detail: e.Message);
+    }
+});
 
-//        if (rowsAffected == 0)
-//        {
-//            return Results.NotFound();
-//        }
-//    }
-//    catch (Exception e)
-//    {
-//        return Results.Problem(detail: e.Message);
-//    }
+app.MapPut("/transaction/{id}", async (int id, Transaction pTransaction, NpgsqlConnection db) =>
+{
+    try
+    {
+        var query = @"UPDATE public.transaction
+            SET 
+                description = @Description,
+                credit = @credit,
+                debit = @Debit,
+                date = @Date
+            WHERE 
+                id = @Id;";
 
-//    return Results.NoContent();
-//});
+        var rowsAffected = await db.ExecuteAsync(query, pTransaction);
 
-//app.MapDelete("/account/{id}", async (int id, NpgsqlConnection db) =>
-//{
-//    try
-//    {
-//        var rowsAffected = await db.ExecuteAsync("DELETE FROM public.g_user WHERE id = @Id;", new { Id = id });
+        if (rowsAffected == 0)
+        {
+            return Results.NotFound();
+        }
+    }
+    catch (Exception e)
+    {
+        return Results.Problem(detail: e.Message);
+    }
 
-//        if (rowsAffected == 0)
-//        {
-//            return Results.NotFound();
-//        }
-//    }
-//    catch (Exception e)
-//    {
-//        return Results.Problem(detail: e.Message);
-//    }
+    return Results.NoContent();
+});
 
-//    return Results.NoContent();
-//});
+app.MapDelete("/transaction/{id}", async (int id, NpgsqlConnection db) =>
+{
+    try
+    {
+        var rowsAffected = await db.ExecuteAsync("DELETE FROM public.transaction WHERE id = @Id;", new { Id = id });
 
-//#endregion
+        if (rowsAffected == 0)
+        {
+            return Results.NotFound();
+        }
+    }
+    catch (Exception e)
+    {
+        return Results.Problem(detail: e.Message);
+    }
 
-//#region Category
+    return Results.NoContent();
+});
 
-//app.MapGet("/account", async (NpgsqlConnection db) =>
-//{
-//    var accountList = new List<Account>();
+#endregion
 
-//    try
-//    {
-//        accountList = (List<Account>)await db.QueryAsync<Account>("select * from public.account;");
-//    }
-//    catch (Exception e)
-//    {
-//    }
+#region Category
 
-//    return Results.Ok(accountList);
-//});
+app.MapGet("/category/{userId}", async (int userId, NpgsqlConnection db) =>
+{
+    var categoryList = new List<Category>();
 
-//app.MapGet("/account/{id}", async (int id, NpgsqlConnection db) =>
-//{
-//    GUser user = null;
+    try
+    {
+        categoryList = (List<Category>)await db.QueryAsync<Category>("select * from public.category where user_id = @Id;",
+            new { Id = userId });
+    }
+    catch (Exception e)
+    {
+        return Results.Problem(detail: e.Message);
+    }
 
-//    try
-//    {
-//        user = await db.QueryFirstOrDefaultAsync<Account>("SELECT * FROM public.g_user WHERE id = @Id;", new { Id = id });
-//    }
-//    catch (Exception e)
-//    {
-//        return Results.Problem(detail: e.Message);
-//    }
+    return Results.Ok(categoryList);
+});
 
-//    if (user == null)
-//    {
-//        return Results.NotFound();
-//    }
+app.MapPost("/category", async (Category pCategory, NpgsqlConnection db) =>
+{
+    try
+    {
+        var insertedId = await db.QuerySingleAsync<int>("INSERT INTO (user_id, category_id, name) VALUES (@UserId, @CategoryId, @Name) RETURNING id; ", pCategory);
 
-//    return Results.Ok(user);
-//});
+        pCategory.Id = insertedId;
 
-//app.MapPut("/account/{id}", async (int id, GUser updatedUser, NpgsqlConnection db) =>
-//{
-//    try
-//    {
-//        var rowsAffected = await db.ExecuteAsync(
-//            "UPDATE public.g_user SET name = @Name, email = @Email WHERE id = @Id;",
-//            new { Name = updatedUser.Name, Email = updatedUser.Email, Id = id }
-//        );
+        return Results.Created($"/category/{pCategory.UserId}?categoryId={insertedId}", pCategory);
+    }
+    catch (Exception e)
+    {
+        return Results.Problem(detail: e.Message);
+    }
+});
 
-//        if (rowsAffected == 0)
-//        {
-//            return Results.NotFound();
-//        }
-//    }
-//    catch (Exception e)
-//    {
-//        return Results.Problem(detail: e.Message);
-//    }
+app.MapPut("/category/{id}", async (int id, Category pCategory, NpgsqlConnection db) =>
+{
+    try
+    {
+        var query = @"UPDATE public.category
+            SET 
+                user_id = @UserId,
+                category_id = @CategoryId,
+                name = @Name
+            WHERE 
+                id = @Id;";
 
-//    return Results.NoContent();
-//});
+        var rowsAffected = await db.ExecuteAsync(query, pCategory);
 
-//app.MapDelete("/account/{id}", async (int id, NpgsqlConnection db) =>
-//{
-//    try
-//    {
-//        var rowsAffected = await db.ExecuteAsync("DELETE FROM public.g_user WHERE id = @Id;", new { Id = id });
+        if (rowsAffected == 0)
+        {
+            return Results.NotFound();
+        }
+    }
+    catch (Exception e)
+    {
+        return Results.Problem(detail: e.Message);
+    }
 
-//        if (rowsAffected == 0)
-//        {
-//            return Results.NotFound();
-//        }
-//    }
-//    catch (Exception e)
-//    {
-//        return Results.Problem(detail: e.Message);
-//    }
+    return Results.NoContent();
+});
 
-//    return Results.NoContent();
-//});
+app.MapDelete("/category/{id}", async (int id, NpgsqlConnection db) =>
+{
+    try
+    {
+        var rowsAffected = await db.ExecuteAsync("DELETE FROM public.category WHERE id = @Id;", new { Id = id });
 
-//#endregion
+        if (rowsAffected == 0)
+        {
+            return Results.NotFound();
+        }
+    }
+    catch (Exception e)
+    {
+        return Results.Problem(detail: e.Message);
+    }
+
+    return Results.NoContent();
+});
+
+#endregion
 
 
 
